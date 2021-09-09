@@ -2,6 +2,7 @@ package org.ada.school.controller.user;
 
 import org.ada.school.repository.document.User;
 import org.ada.school.service.UserService;
+import org.ada.school.service.UserServiceMongoDB;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController
@@ -20,9 +22,9 @@ import java.util.List;
 public class UserController
 {
 
-    private final UserService userService;
+    private final UserServiceMongoDB userService;
 
-    public UserController( @Autowired UserService userService )
+    public UserController( @Autowired UserServiceMongoDB userService )
     {
         this.userService = userService;
     }
@@ -42,6 +44,7 @@ public class UserController
 
 
     @PostMapping
+    //@RolesAllowed("ADMIN")
     public ResponseEntity<User> create( @RequestBody UserDto userDto )
     {
         return ResponseEntity.ok( userService.create( userDto ) );
@@ -54,6 +57,7 @@ public class UserController
     }
 
     @DeleteMapping( "/{id}" )
+    //@RolesAllowed("ADMIN")
     public ResponseEntity<Boolean> delete( @PathVariable String id )
     {
         return ResponseEntity.ok( userService.deleteById( id ) );
