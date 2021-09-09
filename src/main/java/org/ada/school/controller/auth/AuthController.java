@@ -56,7 +56,7 @@ public class AuthController
     private String generateToken( User user, Date expirationDate)
     {
         String token= Jwts.builder()
-                .setSubject( "fabian" )
+                .setSubject( user.getId() )
                 .claim( CLAIMS_ROLES_KEY, user.getRoles() )
                 .setIssuedAt(new Date() )
                 .setExpiration( expirationDate )
